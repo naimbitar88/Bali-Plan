@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   collection,
   deleteDoc,
@@ -53,18 +53,29 @@ export const DEFAULT_META: TripMeta = {
   stayLng: 115.134,
 }
 
-const LS_KEY = 'bali-plan-v1'
+const LS_KEY = 'bali-plan-v2'
 
+/**
+ * We persist the user's *changes* (deletions, edits, custom cards) rather than a frozen
+ * snapshot of the whole library. On load we rebuild the library from the current seed and
+ * re-apply those changes — so new/moved built-in places always show up, while the user's
+ * curation still sticks.
+ */
 interface Persisted {
+  version: 2
   meta: TripMeta
-  activities: Activity[]
   scheduled: ScheduledItem[]
+  removedSeedIds: string[]
+  edits: Record<string, Activity>
+  custom: Activity[]
 }
 
 function loadPersisted(): Persisted | null {
   try {
     const raw = localStorage.getItem(LS_KEY)
-    return raw ? (JSON.parse(raw) as Persisted) : null
+    if (!raw) return null
+    const p = JSON.parse(raw) as Persisted
+    return p && p.version === 2 ? p : null
   } catch {
     return null
   }
@@ -87,29 +98,47 @@ export interface TripStore {
 const sortActivities = (a: Activity[]) =>
   [...a].sort((x, y) => x.area.localeCompare(y.area) || x.name.localeCompare(y.name))
 
+const SEED_IDS = new Set(SEED_ACTIVITIES.map((a) => a.id))
+
 /* ─────────────────────────  LOCAL (no Firebase) MODE  ───────────────────────── */
 function useLocalTrip(): TripStore {
   const demo =
     typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('demo')
-  const seeded = sortActivities(SEED_ACTIVITIES)
-
-  // Demo mode is ephemeral; otherwise load any saved plan so edits/deletions persist.
   const saved = demo ? null : loadPersisted()
+
+  // Persisted *changes* (not a frozen library snapshot).
+  const [removed, setRemoved] = useState<Set<string>>(new Set(saved?.removedSeedIds ?? []))
+  const [edits, setEdits] = useState<Record<string, Activity>>(saved?.edits ?? {})
+  const [custom, setCustom] = useState<Activity[]>(saved?.custom ?? [])
   const [meta, setMeta] = useState<TripMeta>(saved?.meta ?? DEFAULT_META)
-  const [activities, setActivities] = useState<Activity[]>(saved?.activities ?? seeded)
   const [scheduled, setScheduled] = useState<ScheduledItem[]>(
-    saved?.scheduled ?? (demo ? buildDemoScheduled(seeded) : []),
+    saved?.scheduled ?? (demo ? buildDemoScheduled(sortActivities(SEED_ACTIVITIES)) : []),
   )
 
-  // Persist on every change (except demo previews).
+  // Rebuild the library from the *current* seed, then apply the user's changes on top.
+  const activities = useMemo(() => {
+    const fromSeed = SEED_ACTIVITIES.filter((a) => !removed.has(a.id)).map(
+      (a) => edits[a.id] ?? a,
+    )
+    return sortActivities([...fromSeed, ...custom])
+  }, [removed, edits, custom])
+
   useEffect(() => {
     if (demo) return
     try {
-      localStorage.setItem(LS_KEY, JSON.stringify({ meta, activities, scheduled }))
+      const payload: Persisted = {
+        version: 2,
+        meta,
+        scheduled,
+        removedSeedIds: [...removed],
+        edits,
+        custom,
+      }
+      localStorage.setItem(LS_KEY, JSON.stringify(payload))
     } catch {
       /* storage full / unavailable — ignore */
     }
-  }, [demo, meta, activities, scheduled])
+  }, [demo, meta, scheduled, removed, edits, custom])
 
   return {
     meta,
@@ -117,10 +146,15 @@ function useLocalTrip(): TripStore {
     scheduled,
     live: false,
     setMeta,
-    addActivity: (a) => setActivities((p) => sortActivities([...p, a])),
-    updateActivity: (a) =>
-      setActivities((p) => sortActivities(p.map((x) => (x.id === a.id ? a : x)))),
-    removeActivity: (id) => setActivities((p) => p.filter((x) => x.id !== id)),
+    addActivity: (a) => setCustom((p) => [...p, a]),
+    updateActivity: (a) => {
+      if (SEED_IDS.has(a.id)) setEdits((p) => ({ ...p, [a.id]: a }))
+      else setCustom((p) => p.map((x) => (x.id === a.id ? a : x)))
+    },
+    removeActivity: (id) => {
+      if (SEED_IDS.has(id)) setRemoved((p) => new Set(p).add(id))
+      else setCustom((p) => p.filter((x) => x.id !== id))
+    },
     addScheduled: (s) => setScheduled((p) => [...p, s]),
     updateScheduled: (s) => setScheduled((p) => p.map((x) => (x.id === s.id ? s : x))),
     removeScheduled: (id) => setScheduled((p) => p.filter((x) => x.id !== id)),
