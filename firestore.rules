@@ -1,0 +1,17 @@
+rules_version = '2';
+
+// Trip planner rules: the three of you share one trip document tree.
+// Access is scoped to the single trip path. This is intentionally open (no login)
+// so you can share one link — anyone with the link + app can read/write THIS trip only.
+// To lock it down later, add Firebase Auth and require `request.auth != null`.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /trips/bali-2026/{document=**} {
+      allow read, write: if true;
+    }
+    // Everything else is denied.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

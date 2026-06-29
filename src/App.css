@@ -1,0 +1,220 @@
+:root {
+  --teal: #0e9f9f;
+  --ink: #173a3a;
+  --bg: #f3f7f6;
+  --card: #ffffff;
+  --line: #e2eae8;
+  --muted: #6b8585;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; margin: 0; }
+body { background: var(--bg); color: var(--ink); }
+
+.app { display: flex; flex-direction: column; height: 100vh; }
+
+/* ───────────────────────────  Top bar  ─────────────────────────── */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 12px 20px;
+  background: linear-gradient(100deg, #0e9f9f 0%, #19b5a3 55%, #3fc7a8 100%);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  z-index: 5;
+}
+.brand { display: flex; align-items: center; gap: 8px; }
+.brand-emoji { font-size: 24px; }
+.trip-title {
+  background: rgba(255, 255, 255, 0.16);
+  border: none;
+  color: #fff;
+  font-size: 19px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 8px;
+  width: 220px;
+}
+.trip-title::placeholder { color: rgba(255,255,255,.7); }
+.dates { display: flex; align-items: center; gap: 8px; }
+.dates label {
+  display: flex; flex-direction: column;
+  font-size: 10px; text-transform: uppercase; letter-spacing: .5px;
+  opacity: .85;
+}
+.dates input {
+  border: none; border-radius: 7px; padding: 5px 8px; font-size: 13px;
+  color: var(--ink);
+}
+.dates .arrow { margin-top: 12px; font-size: 16px; }
+.status {
+  margin-left: auto; display: flex; align-items: center; gap: 7px;
+  font-size: 13px; font-weight: 600;
+  background: rgba(255,255,255,.16); padding: 6px 12px; border-radius: 20px;
+}
+.status .dot { width: 9px; height: 9px; border-radius: 50%; }
+.status.on .dot { background: #b6ff8e; box-shadow: 0 0 0 3px rgba(182,255,142,.3); }
+.status.off .dot { background: #ffd56b; }
+
+/* ───────────────────────────  Layout  ─────────────────────────── */
+.layout { display: flex; flex: 1; min-height: 0; }
+
+/* ───────────────────────────  Library  ─────────────────────────── */
+.library {
+  width: 320px;
+  flex-shrink: 0;
+  background: #fbfdfc;
+  border-right: 1px solid var(--line);
+  display: flex; flex-direction: column;
+  padding: 14px;
+  overflow-y: auto;
+}
+.library-head { display: flex; align-items: center; justify-content: space-between; }
+.library-head h2 { margin: 0; font-size: 17px; }
+.add-btn {
+  background: var(--teal); color: #fff; border: none; border-radius: 8px;
+  padding: 6px 12px; font-weight: 600; cursor: pointer;
+}
+.search {
+  margin: 10px 0 4px; width: 100%; padding: 8px 10px;
+  border: 1px solid var(--line); border-radius: 8px; font-size: 13px;
+}
+.hint { margin: 4px 0 10px; font-size: 12px; color: var(--muted); }
+
+.group { margin-bottom: 12px; }
+.group-head {
+  width: 100%; display: flex; align-items: center; gap: 8px;
+  background: #fff; border: 1px solid var(--line); border-left: 4px solid;
+  border-radius: 8px; padding: 8px 10px; cursor: pointer;
+  font-weight: 700; font-size: 14px; color: var(--ink);
+}
+.group-dot { width: 10px; height: 10px; border-radius: 50%; }
+.group-count {
+  background: var(--bg); border-radius: 10px; padding: 1px 8px;
+  font-size: 12px; color: var(--muted);
+}
+.group-caret { margin-left: auto; color: var(--muted); }
+.group-cards { display: flex; flex-direction: column; gap: 8px; padding: 8px 0; }
+
+.activity-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--teal);
+  border-radius: 10px;
+  padding: 9px 11px;
+  cursor: grab;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+  transition: box-shadow .12s, transform .12s;
+}
+.activity-card:hover { box-shadow: 0 4px 14px rgba(0,0,0,.10); transform: translateY(-1px); }
+.activity-card:active { cursor: grabbing; }
+.card-main { display: flex; align-items: center; gap: 8px; }
+.card-icon { font-size: 16px; }
+.card-name { font-weight: 600; font-size: 13.5px; line-height: 1.2; }
+.card-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; }
+.chip {
+  font-size: 11px; border-radius: 20px; padding: 2px 8px;
+  border: 1px solid var(--line); background: #f7faf9; color: var(--ink);
+  text-decoration: none; cursor: pointer;
+}
+.chip.duration { background: #eef6f5; }
+.chip.events { background: #fff3e6; border-color: #ffd9ad; color: #b3640f; }
+.chip.ig { background: #fdeefb; border-color: #f6cbef; color: #b5179e; font-weight: 600; }
+.chip.edit { background: #fff; }
+.card-verify { margin-top: 6px; font-size: 11px; color: #b3640f; }
+.card-assign { margin-top: 8px; }
+.assign-select {
+  width: 100%; font-size: 12.5px; padding: 6px 8px;
+  border: 1px dashed #bcd6d2; border-radius: 8px;
+  background: #f3faf9; color: var(--ink); cursor: pointer;
+}
+
+/* FullCalendar nav buttons (shown on tablet/phone paged views) */
+.fc .fc-button-primary {
+  background: var(--teal); border-color: var(--teal);
+  text-transform: none; font-weight: 600;
+}
+.fc .fc-button-primary:hover { background: #0c8c8c; border-color: #0c8c8c; }
+.fc .fc-toolbar-title { font-size: 16px; font-weight: 700; }
+.fc .fc-header-toolbar { margin-bottom: 8px; }
+
+/* ───────────────────────────  Planner / calendar  ─────────────────────────── */
+.planner { flex: 1; min-width: 0; padding: 12px; overflow: hidden; }
+.fc { height: 100%; background: #fff; border-radius: 12px; padding: 8px; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+.fc .fc-col-header-cell-cushion { font-weight: 700; color: var(--ink); padding: 6px 4px; }
+.fc .fc-timegrid-slot { height: 2.1em; }
+.fc-ev { padding: 1px 2px; line-height: 1.15; overflow: hidden; }
+.fc-ev-time { font-size: 10px; opacity: .9; }
+.fc-ev-title { font-size: 11.5px; font-weight: 600; }
+.fc-event { cursor: pointer; }
+
+/* ───────────────────────────  Modal  ─────────────────────────── */
+.modal-backdrop {
+  position: fixed; inset: 0; background: rgba(15, 40, 40, .45);
+  display: flex; align-items: center; justify-content: center; z-index: 50;
+}
+.modal {
+  background: #fff; border-radius: 14px; padding: 22px;
+  width: 460px; max-width: 92vw; max-height: 88vh; overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,.3);
+}
+.modal h3 { margin: 0 0 14px; }
+.modal label { display: flex; flex-direction: column; font-size: 12px; font-weight: 600; color: var(--muted); gap: 4px; margin-bottom: 12px; }
+.modal input, .modal select, .modal textarea {
+  border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px;
+  font-size: 14px; color: var(--ink); font-family: inherit;
+}
+.modal textarea { min-height: 60px; resize: vertical; }
+.modal .row { display: flex; gap: 10px; }
+.ig-field { display: flex; gap: 6px; align-items: stretch; }
+.ig-field input { flex: 1; min-width: 0; }
+.ig-btn {
+  display: inline-flex; align-items: center; white-space: nowrap;
+  border: 1px solid var(--line); border-radius: 8px; padding: 0 10px;
+  font-size: 12.5px; font-weight: 600; cursor: pointer; text-decoration: none;
+}
+.ig-btn.search { background: #fdeefb; border-color: #f6cbef; color: #b5179e; }
+.ig-btn.tag { background: #eef6f5; color: var(--ink); }
+.ig-btn:disabled { opacity: .5; cursor: not-allowed; }
+.ig-preview { display: block; font-size: 12px; color: var(--teal); margin: -6px 0 12px; word-break: break-all; }
+.modal .row label { flex: 1; }
+.modal-actions { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.modal-actions button {
+  border: 1px solid var(--line); background: #fff; border-radius: 8px;
+  padding: 8px 16px; font-weight: 600; cursor: pointer; font-size: 14px;
+}
+.modal-actions .primary { background: var(--teal); color: #fff; border-color: var(--teal); }
+.modal-actions .danger { background: #fff0f0; color: #c0392b; border-color: #f3c2bd; }
+
+/* ─────────────────────────  Responsive: iPad  ───────────────────────── */
+@media (max-width: 1024px) {
+  .library { width: 270px; }
+  .trip-title { width: 160px; font-size: 17px; }
+}
+
+/* ─────────────────────────  Responsive: phone  ───────────────────────── */
+@media (max-width: 680px) {
+  .topbar { flex-wrap: wrap; gap: 10px 14px; padding: 10px 14px; }
+  .brand { width: 100%; }
+  .trip-title { width: 100%; flex: 1; }
+  .status { margin-left: 0; }
+
+  .layout { flex-direction: column; }
+  .library {
+    width: 100%;
+    max-height: 42vh;
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+  }
+  .hint { display: none; } /* drag isn't the primary action on phones */
+  .planner { padding: 8px; }
+  .group-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .card-assign { grid-column: 1 / -1; }
+}
+
+/* Single-column cards on the narrowest phones */
+@media (max-width: 420px) {
+  .group-cards { grid-template-columns: 1fr; }
+}
