@@ -46,7 +46,7 @@ npm run dev          # http://localhost:5173
    so the live site can reach Firestore.
 2. Settings → **Pages** → Source: **GitHub Actions**.
 3. Push — `.github/workflows/deploy.yml` builds and deploys.
-4. Share: **https://naimbitar88.github.io/bali-plan/**
+4. Share: **https://naimbitar88.github.io/Bali-Plan/**
 
 ## Single-file preview
 
