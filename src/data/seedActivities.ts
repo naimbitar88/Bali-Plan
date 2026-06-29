@@ -647,6 +647,51 @@ const RAW: Activity[] = [
     verifyNote: 'Whimsical iron-and-fairy bar + nightclub, live music, doors 7pm till late.',
   },
   {
+    id: 'smy-mexicola',
+    name: 'Motel Mexicola',
+    area: 'Seminyak',
+    category: 'party',
+    defaultDurationMin: 180,
+    instagram: ig('motelmexicola'),
+    notes: 'Riotous Mexican party-restaurant; dancefloor kicks off after dinner.',
+  },
+  {
+    id: 'smy-kudeta',
+    name: 'Ku De Ta',
+    area: 'Seminyak',
+    category: 'beachclub',
+    defaultDurationMin: 240,
+    instagram: ig('kudetabali'),
+    notes: 'Iconic beachfront club; sunset DJs and party on the lawn.',
+  },
+  {
+    id: 'smy-aoku',
+    name: 'Aoku',
+    area: 'Seminyak',
+    category: 'party',
+    defaultDurationMin: 150,
+    instagram: ig('aokubali'),
+    notes: 'Intimate Japanese cocktail speakeasy above Dahana, Petitenget.',
+  },
+  {
+    id: 'smy-eazy',
+    name: 'EAZY',
+    area: 'Seminyak',
+    category: 'party',
+    defaultDurationMin: 150,
+    instagram: ig('eazybali'),
+    notes: 'Craft cocktail bar by Jan Jurecka; serious drinks + Texas BBQ below.',
+  },
+  {
+    id: 'smy-seken',
+    name: 'Seken Bali',
+    area: 'Seminyak',
+    category: 'party',
+    defaultDurationMin: 150,
+    instagram: ig('sekeninbali'),
+    notes: 'Live jazz & signature cocktails at IZE Seminyak.',
+  },
+  {
     id: 'smy-potatohead',
     name: 'Desa Potato Head',
     area: 'Seminyak',
@@ -781,6 +826,11 @@ const COORDS: Record<string, { lat: number; lng: number }> = {
   'ap-damaria': { lat: -8.683, lng: 115.157 },
   'ap-redruby': { lat: -8.681, lng: 115.156 },
   'ap-ironfairies': { lat: -8.682, lng: 115.157 },
+  'smy-mexicola': { lat: -8.682, lng: 115.158 },
+  'smy-kudeta': { lat: -8.684, lng: 115.155 },
+  'smy-aoku': { lat: -8.683, lng: 115.157 },
+  'smy-eazy': { lat: -8.682, lng: 115.157 },
+  'smy-seken': { lat: -8.685, lng: 115.16 },
   'smy-potatohead': { lat: -8.6792, lng: 115.1563 },
   // Shopping (Canggu)
   'shp-baliedition': { lat: -8.658, lng: 115.135 },
@@ -830,6 +880,7 @@ const RATINGS: Record<string, number> = {
   'cgu-mauri': 4.7, 'cgu-sangsaka': 4.6, 'smy-potatohead': 4.6,
   'ap-jenja': 4.0, 'ap-lafavela': 4.3, 'ap-mirror': 4.0, 'ap-sandbar': 4.4,
   'ap-damaria': 4.5, 'ap-redruby': 4.2, 'ap-ironfairies': 4.5,
+  'smy-mexicola': 4.4, 'smy-kudeta': 4.4, 'smy-aoku': 4.7, 'smy-eazy': 4.6, 'smy-seken': 4.8,
   // Kuta
   'ap-skygarden': 4.1,
   // Uluwatu
@@ -874,6 +925,12 @@ const HOURS: Record<string, { open: string; close: string }> = {
   'ap-damaria': { open: '17:00', close: '03:00' },
   'ap-redruby': { open: '22:00', close: '04:00' },
   'ap-ironfairies': { open: '19:00', close: '03:00' },
+  // Seminyak clubs / lounges
+  'smy-mexicola': { open: '11:00', close: '01:00' },
+  'smy-kudeta': { open: '08:00', close: '01:00' },
+  'smy-aoku': { open: '19:00', close: '01:00' },
+  'smy-eazy': { open: '19:00', close: '02:00' },
+  'smy-seken': { open: '17:00', close: '01:00' },
 }
 
 export const SEED_ACTIVITIES: Activity[] = RAW.map((a) => {
