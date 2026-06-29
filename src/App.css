@@ -156,6 +156,7 @@ body { background: var(--bg); color: var(--ink); }
 }
 .chip.duration { background: #eef6f5; }
 .chip.rating { background: #fff6df; border-color: #f3dca0; color: #9a6a00; font-weight: 700; }
+.chip.hours { background: #f0f0f5; border-color: #d8d8e4; color: #4a4a66; }
 .chip.dist { background: #eef3ff; border-color: #cdddff; color: #2f5bd0; }
 .chip.dir { background: #eafaf0; border-color: #b9e6cb; color: #1c7a47; font-weight: 600; }
 .chip.events { background: #fff3e6; border-color: #ffd9ad; color: #b3640f; }

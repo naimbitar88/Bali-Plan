@@ -553,19 +553,6 @@ const RAW: Activity[] = [
     ],
   },
   {
-    id: 'ap-akademi',
-    name: 'Akademi Bar',
-    area: 'Seminyak',
-    category: 'afterparty',
-    defaultDurationMin: 240,
-    instagram: ig('potatoheadbali'),
-    verifyNote: 'Acclaimed craft-cocktail bar at Desa Potato Head, Petitenget.',
-    weeklyEvents: [
-      { dayOfWeek: 5, name: 'Friday', start: '18:00', end: '02:00' },
-      { dayOfWeek: 6, name: 'Saturday', start: '18:00', end: '02:00' },
-    ],
-  },
-  {
     id: 'ap-jenja',
     name: 'Jenja Club',
     area: 'Seminyak',
@@ -622,6 +609,42 @@ const RAW: Activity[] = [
       { dayOfWeek: 5, name: 'Friday', start: '21:00', end: '03:00' },
       { dayOfWeek: 6, name: 'Saturday', start: '21:00', end: '03:00' },
     ],
+  },
+  {
+    id: 'ap-sandbar',
+    name: 'Sandbar',
+    area: 'Canggu',
+    category: 'afterparty',
+    defaultDurationMin: 240,
+    instagram: ig('sandbar_official'),
+    verifyNote: 'Batu Bolong beach bar (next to Old Man’s) — the last spot open, till ~3am.',
+  },
+  {
+    id: 'ap-damaria',
+    name: 'Da Maria',
+    area: 'Seminyak',
+    category: 'afterparty',
+    defaultDurationMin: 240,
+    instagram: ig('damariabali'),
+    verifyNote: 'Italian by day, full party after dark (Tue–Sun till ~3am), Petitenget.',
+  },
+  {
+    id: 'ap-redruby',
+    name: 'Red Ruby',
+    area: 'Seminyak',
+    category: 'afterparty',
+    defaultDurationMin: 300,
+    instagram: ig('redrubybali'),
+    verifyNote: 'House/techno late-night club on Jl. Petitenget — kicks off ~1am till dawn.',
+  },
+  {
+    id: 'ap-ironfairies',
+    name: 'The Iron Fairies Bali',
+    area: 'Seminyak',
+    category: 'afterparty',
+    defaultDurationMin: 240,
+    instagram: ig('theironfairiesbali'),
+    verifyNote: 'Whimsical iron-and-fairy bar + nightclub, live music, doors 7pm till late.',
   },
   {
     id: 'smy-potatohead',
@@ -754,7 +777,10 @@ const COORDS: Record<string, { lat: number; lng: number }> = {
   'cgu-palmilla': { lat: -8.834, lng: 115.163 }, // Melasti, Ungasan
   // After party
   'ap-vault': { lat: -8.647, lng: 115.133 },
-  'ap-akademi': { lat: -8.6792, lng: 115.1563 }, // Potato Head, Petitenget
+  'ap-sandbar': { lat: -8.6557, lng: 115.1296 },
+  'ap-damaria': { lat: -8.683, lng: 115.157 },
+  'ap-redruby': { lat: -8.681, lng: 115.156 },
+  'ap-ironfairies': { lat: -8.682, lng: 115.157 },
   'smy-potatohead': { lat: -8.6792, lng: 115.1563 },
   // Shopping (Canggu)
   'shp-baliedition': { lat: -8.658, lng: 115.135 },
@@ -801,8 +827,9 @@ const RATINGS: Record<string, number> = {
   'shp-loveanchor': 4.4, 'shp-limitededition': 4.5, 'shp-prettythings': 4.7,
   'spa-amo': 4.6, 'spa-spring': 4.7, 'spa-como': 4.7, 'spa-therapy': 4.8, 'spa-bodytemple': 4.5,
   // Seminyak
-  'cgu-mauri': 4.7, 'cgu-sangsaka': 4.6, 'smy-potatohead': 4.6, 'ap-akademi': 4.6,
-  'ap-jenja': 4.0, 'ap-lafavela': 4.3, 'ap-mirror': 4.0,
+  'cgu-mauri': 4.7, 'cgu-sangsaka': 4.6, 'smy-potatohead': 4.6,
+  'ap-jenja': 4.0, 'ap-lafavela': 4.3, 'ap-mirror': 4.0, 'ap-sandbar': 4.4,
+  'ap-damaria': 4.5, 'ap-redruby': 4.2, 'ap-ironfairies': 4.5,
   // Kuta
   'ap-skygarden': 4.1,
   // Uluwatu
@@ -818,12 +845,45 @@ const RATINGS: Record<string, number> = {
   'ubd-kantolampo': 4.6, 'ubd-baliswing': 4.4,
 }
 
+/** Daily opening hours for clubs / beach clubs / after-party venues. */
+const HOURS: Record<string, { open: string; close: string }> = {
+  // Canggu — beach clubs & party
+  'cgu-finns': { open: '10:00', close: '23:00' },
+  'cgu-labrisa': { open: '10:00', close: '23:00' },
+  'cgu-thelawn': { open: '11:00', close: '23:00' },
+  'cgu-oldmans': { open: '08:00', close: '01:00' },
+  'oth-atlas': { open: '10:00', close: '23:30' },
+  'cgu-cafedelmar': { open: '10:00', close: '23:00' },
+  // Uluwatu — beach clubs & party
+  'ulu-singlefin': { open: '08:00', close: '22:00' }, // Wed & Sun till 02:00
+  'ulu-sundays': { open: '07:30', close: '22:00' },
+  'ulu-karma': { open: '09:00', close: '22:00' },
+  'ulu-elkabron': { open: '11:00', close: '24:00' },
+  'ulu-luna': { open: '10:00', close: '23:00' },
+  'oth-savaya': { open: '15:00', close: '23:00' },
+  'cgu-palmilla': { open: '09:00', close: '21:00' },
+  // Seminyak
+  'smy-potatohead': { open: '08:00', close: '24:00' },
+  // After party (always 2–4am)
+  'ap-vault': { open: '22:00', close: '04:00' },
+  'ap-jenja': { open: '23:00', close: '04:00' },
+  'ap-lafavela': { open: '19:00', close: '03:00' },
+  'ap-mirror': { open: '23:00', close: '04:00' },
+  'ap-skygarden': { open: '21:00', close: '04:00' },
+  'ap-sandbar': { open: '17:00', close: '03:00' },
+  'ap-damaria': { open: '17:00', close: '03:00' },
+  'ap-redruby': { open: '22:00', close: '04:00' },
+  'ap-ironfairies': { open: '19:00', close: '03:00' },
+}
+
 export const SEED_ACTIVITIES: Activity[] = RAW.map((a) => {
   const c = COORDS[a.id]
   const r = RATINGS[a.id]
+  const h = HOURS[a.id]
   return {
     ...a,
     ...(c ? { lat: c.lat, lng: c.lng } : {}),
     ...(r != null ? { rating: r } : {}),
+    ...(h ? { hours: h } : {}),
   }
 })

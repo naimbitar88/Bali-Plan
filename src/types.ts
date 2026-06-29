@@ -42,6 +42,8 @@ export interface Activity {
   lng?: number
   /** Google rating snapshot (out of 5). */
   rating?: number
+  /** Daily opening hours, e.g. { open: '10:00', close: '23:00' } — shown on club cards. */
+  hours?: { open: string; close: string }
   /** Present on venues that run scheduled events (Savaya, Single Fin, …). */
   weeklyEvents?: WeeklyEvent[]
   /** Shown when lineups should be double-checked closer to the trip. */

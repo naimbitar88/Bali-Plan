@@ -71,6 +71,11 @@ export default function ActivityCard({
             ⭐ {activity.rating.toFixed(1)}
           </span>
         )}
+        {activity.hours && (
+          <span className="chip hours" title="Opening hours">
+            🕒 {activity.hours.open}–{activity.hours.close}
+          </span>
+        )}
         {est && (
           <span className="chip dist" title="Rough driving estimate from your stay (approx)">
             🚗 ≈{est.km} km · ≈{est.min} min
