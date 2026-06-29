@@ -200,12 +200,27 @@ export function estimate(from: LatLng, to: LatLng): { km: number; min: number } 
   return { km: Math.round(roadKm * 10) / 10, min: Math.max(1, min) }
 }
 
-/** Google Maps directions link (live, exact distance/time when opened). */
-export function mapsDirectionsUrl(stay: string, dest: { name: string; coords?: LatLng }): string {
-  const destination = dest.coords
-    ? `${dest.coords.lat},${dest.coords.lng}`
-    : `${dest.name}, Bali`
-  const base = 'https://www.google.com/maps/dir/?api=1&travelmode=driving'
+/** Reduce a display name to just the navigable venue so Maps resolves the real place. */
+function cleanPlaceName(name: string): string {
+  return name
+    .replace(/\(.*?\)/g, '') // drop "(sunset bar)", "(Pererenan)", …
+    .split('/')[0] // "Batu Bolong / Echo Beach" → "Batu Bolong"
+    .split(/\s[+&]\s/)[0] // "Uluwatu Temple + Kecak…" → "Uluwatu Temple"
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+/**
+ * Google Maps directions link. The route always starts from your stay (origin) and ends at
+ * the venue, resolved by *name + area* (not hand-entered coordinates, which can be off) so
+ * Maps routes to the real place.
+ */
+export function mapsDirectionsUrl(stay: string, name: string, areaHint?: string): string {
+  const core = cleanPlaceName(name)
+  const destination =
+    areaHint && areaHint !== 'Other' ? `${core}, ${areaHint}, Bali` : `${core}, Bali`
   const origin = stay ? `&origin=${encodeURIComponent(stay)}` : ''
-  return `${base}${origin}&destination=${encodeURIComponent(destination)}`
+  return `https://www.google.com/maps/dir/?api=1&travelmode=driving${origin}&destination=${encodeURIComponent(
+    destination,
+  )}`
 }

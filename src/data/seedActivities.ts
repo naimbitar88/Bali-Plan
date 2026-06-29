@@ -209,7 +209,7 @@ const RAW: Activity[] = [
   },
   {
     id: 'cgu-cafes',
-    name: 'Canggu café hopping (Crate / Milk & Madu)',
+    name: 'Crate Café (Canggu café hopping)',
     area: 'Canggu',
     category: 'food',
     defaultDurationMin: 120,
@@ -427,7 +427,7 @@ const RAW: Activity[] = [
   },
   {
     id: 'ubd-batur',
-    name: 'Mount Batur sunrise trek (day trip)',
+    name: 'Mount Batur (sunrise trek)',
     area: 'Ubud',
     category: 'hike',
     defaultDurationMin: 420,
@@ -512,7 +512,7 @@ const RAW: Activity[] = [
   },
   {
     id: 'ap-mirror',
-    name: 'Mirror Bali (Seminyak)',
+    name: 'Mirror Bali',
     area: 'Seminyak',
     category: 'afterparty',
     defaultDurationMin: 300,
@@ -574,12 +574,12 @@ const COORDS: Record<string, { lat: number; lng: number }> = {
   // After party
   'ap-vault': { lat: -8.647, lng: 115.133 },
   'ap-akademi': { lat: -8.648, lng: 115.131 },
-  'ap-jenja': { lat: -8.67, lng: 115.15 },
-  'ap-mirror': { lat: -8.687, lng: 115.157 },
-  'ap-skygarden': { lat: -8.718, lng: 115.17 },
-  'ap-lafavela': { lat: -8.69, lng: 115.162 },
+  'ap-jenja': { lat: -8.68, lng: 115.156 },
+  'ap-mirror': { lat: -8.679, lng: 115.1565 },
+  'ap-skygarden': { lat: -8.7099, lng: 115.1701 },
+  'ap-lafavela': { lat: -8.6845, lng: 115.1565 },
   // A few key Uluwatu/Ubud anchors (day trips)
-  'oth-savaya': { lat: -8.8297, lng: 115.0876 },
+  'oth-savaya': { lat: -8.8466, lng: 115.0876 }, // Pecatu cliff (formerly Omnia)
   'oth-atlas': { lat: -8.6772, lng: 115.1455 },
 }
 

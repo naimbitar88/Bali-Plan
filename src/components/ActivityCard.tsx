@@ -40,7 +40,7 @@ export default function ActivityCard({
   const coords =
     activity.lat != null && activity.lng != null ? { lat: activity.lat, lng: activity.lng } : undefined
   const est = stayCoords && coords ? estimate(stayCoords, coords) : null
-  const directionsUrl = mapsDirectionsUrl(stay, { name: activity.name, coords })
+  const directionsUrl = mapsDirectionsUrl(stay, activity.name, activity.area)
   return (
     <div
       className="activity-card"
