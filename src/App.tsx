@@ -92,6 +92,12 @@ export default function App() {
             onEdit={setEditing}
             onAdd={() => setEditing(blankActivity())}
             onAssign={handleAssign}
+            onDelete={trip.removeActivity}
+            onDeleteArea={(area) =>
+              trip.activities
+                .filter((a) => a.area === area)
+                .forEach((a) => trip.removeActivity(a.id))
+            }
           />
         </div>
 

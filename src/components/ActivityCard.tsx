@@ -6,6 +6,7 @@ interface Props {
   days: TripDay[]
   onEdit: (a: Activity) => void
   onAssign: (activityId: string, dayIso: string) => void
+  onDelete: (id: string) => void
 }
 
 function durationLabel(min: number) {
@@ -16,7 +17,7 @@ function durationLabel(min: number) {
   return `${m}m`
 }
 
-export default function ActivityCard({ activity, days, onEdit, onAssign }: Props) {
+export default function ActivityCard({ activity, days, onEdit, onAssign, onDelete }: Props) {
   const color = AREA_COLOR[activity.area]
   return (
     <div
@@ -28,6 +29,17 @@ export default function ActivityCard({ activity, days, onEdit, onAssign }: Props
       <div className="card-main">
         <span className="card-icon">{CATEGORY_ICON[activity.category]}</span>
         <span className="card-name">{activity.name}</span>
+        <button
+          className="card-delete"
+          onClick={() => {
+            if (confirm(`Delete "${activity.name}"?`)) onDelete(activity.id)
+          }}
+          onMouseDown={(e) => e.stopPropagation()}
+          title="Delete this card"
+          aria-label="Delete card"
+        >
+          ×
+        </button>
       </div>
 
       <div className="card-meta">

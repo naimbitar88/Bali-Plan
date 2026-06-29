@@ -6,6 +6,7 @@ export const CATEGORY_ICON: Record<Category, string> = {
   beachclub: '🍹',
   party: '🎧',
   food: '🍽️',
+  dining: '🍷',
   hike: '🥾',
   waterfall: '💦',
   nature: '🌿',
@@ -97,6 +98,8 @@ export function defaultHourFor(category: Category): number {
       return 16
     case 'temple':
       return 16
+    case 'dining':
+      return 19
     case 'food':
       return 12
     case 'hike':

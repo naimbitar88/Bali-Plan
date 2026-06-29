@@ -6,6 +6,7 @@ export type Category =
   | 'beachclub'
   | 'party'
   | 'food'
+  | 'dining'
   | 'hike'
   | 'waterfall'
   | 'nature'

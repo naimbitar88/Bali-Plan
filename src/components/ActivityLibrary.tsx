@@ -9,6 +9,8 @@ interface Props {
   onEdit: (a: Activity) => void
   onAdd: () => void
   onAssign: (activityId: string, dayIso: string) => void
+  onDelete: (id: string) => void
+  onDeleteArea: (area: Area) => void
 }
 
 const AREA_LABEL: Record<Area, string> = {
@@ -18,7 +20,15 @@ const AREA_LABEL: Record<Area, string> = {
   Other: 'Party / Beach Clubs',
 }
 
-export default function ActivityLibrary({ activities, days, onEdit, onAdd, onAssign }: Props) {
+export default function ActivityLibrary({
+  activities,
+  days,
+  onEdit,
+  onAdd,
+  onAssign,
+  onDelete,
+  onDeleteArea,
+}: Props) {
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({})
   const [query, setQuery] = useState('')
 
@@ -54,16 +64,32 @@ export default function ActivityLibrary({ activities, days, onEdit, onAdd, onAss
           const isCollapsed = collapsed[area]
           return (
             <section key={area} className="group">
-              <button
-                className="group-head"
-                style={{ borderLeftColor: AREA_COLOR[area] }}
-                onClick={() => setCollapsed((c) => ({ ...c, [area]: !c[area] }))}
-              >
-                <span className="group-dot" style={{ background: AREA_COLOR[area] }} />
-                {AREA_LABEL[area]}
-                <span className="group-count">{items.length}</span>
-                <span className="group-caret">{isCollapsed ? '▸' : '▾'}</span>
-              </button>
+              <div className="group-head" style={{ borderLeftColor: AREA_COLOR[area] }}>
+                <button
+                  className="group-toggle"
+                  onClick={() => setCollapsed((c) => ({ ...c, [area]: !c[area] }))}
+                >
+                  <span className="group-dot" style={{ background: AREA_COLOR[area] }} />
+                  {AREA_LABEL[area]}
+                  <span className="group-count">{items.length}</span>
+                  <span className="group-caret">{isCollapsed ? '▸' : '▾'}</span>
+                </button>
+                <button
+                  className="group-delete"
+                  title={`Delete the entire ${AREA_LABEL[area]} section`}
+                  aria-label={`Delete ${AREA_LABEL[area]} section`}
+                  onClick={() => {
+                    if (
+                      confirm(
+                        `Delete the entire "${AREA_LABEL[area]}" section (${items.length} cards)? This cannot be undone.`,
+                      )
+                    )
+                      onDeleteArea(area)
+                  }}
+                >
+                  🗑
+                </button>
+              </div>
               {!isCollapsed && (
                 <div className="group-cards">
                   {items.map((a) => (
@@ -73,6 +99,7 @@ export default function ActivityLibrary({ activities, days, onEdit, onAdd, onAss
                       days={days}
                       onEdit={onEdit}
                       onAssign={onAssign}
+                      onDelete={onDelete}
                     />
                   ))}
                 </div>
