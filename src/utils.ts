@@ -46,14 +46,16 @@ export function typeOf(category: Category): PlaceType {
 }
 
 export const AREA_COLOR: Record<Area, string> = {
-  Uluwatu: '#0e9f9f',
   Canggu: '#f0883e',
+  Seminyak: '#e0457b',
+  Kuta: '#3a86ff',
+  Uluwatu: '#0e9f9f',
   Ubud: '#3fa34d',
   Other: '#9b5de5',
 }
 
-// Canggu first — that's where we're staying / focusing.
-export const AREA_ORDER: Area[] = ['Canggu', 'Uluwatu', 'Ubud', 'Other']
+// Canggu first — that's where we're staying / focusing; nearby areas next.
+export const AREA_ORDER: Area[] = ['Canggu', 'Seminyak', 'Kuta', 'Uluwatu', 'Ubud', 'Other']
 
 const pad = (n: number) => String(n).padStart(2, '0')
 export const fmtTime = (d: Date) => `${pad(d.getHours())}:${pad(d.getMinutes())}`

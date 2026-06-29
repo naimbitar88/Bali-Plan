@@ -451,11 +451,11 @@ const RAW: Activity[] = [
     instagram: ig('baliswing'),
   },
 
-  // ──────────────────  PARTY / BEACH CLUBS (extra)  ──────────────────
+  // ──────────────────  MORE CLUBS (by location)  ──────────────────
   {
     id: 'oth-savaya',
     name: 'Savaya Bali',
-    area: 'Other',
+    area: 'Uluwatu',
     category: 'party',
     defaultDurationMin: 300,
     instagram: ig('savayabali'),
@@ -469,7 +469,7 @@ const RAW: Activity[] = [
   {
     id: 'oth-atlas',
     name: 'Atlas Beach Fest',
-    area: 'Other',
+    area: 'Canggu',
     category: 'party',
     defaultDurationMin: 300,
     instagram: ig('atlasbeachfest'),
@@ -504,7 +504,7 @@ const RAW: Activity[] = [
   {
     id: 'ap-jenja',
     name: 'Jenja Club',
-    area: 'Other',
+    area: 'Seminyak',
     category: 'afterparty',
     defaultDurationMin: 300,
     instagram: tag('jenjabali'),
@@ -513,7 +513,7 @@ const RAW: Activity[] = [
   {
     id: 'ap-mirror',
     name: 'Mirror Bali (Seminyak)',
-    area: 'Other',
+    area: 'Seminyak',
     category: 'afterparty',
     defaultDurationMin: 300,
     instagram: tag('mirrorbali'),
@@ -522,7 +522,7 @@ const RAW: Activity[] = [
   {
     id: 'ap-skygarden',
     name: 'Sky Garden (Kuta)',
-    area: 'Other',
+    area: 'Kuta',
     category: 'afterparty',
     defaultDurationMin: 300,
     instagram: tag('skygardenbali'),
@@ -531,7 +531,7 @@ const RAW: Activity[] = [
   {
     id: 'ap-lafavela',
     name: 'La Favela (Seminyak)',
-    area: 'Other',
+    area: 'Seminyak',
     category: 'afterparty',
     defaultDurationMin: 240,
     instagram: tag('lafavelabali'),

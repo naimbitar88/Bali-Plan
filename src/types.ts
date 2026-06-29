@@ -1,4 +1,4 @@
-export type Area = 'Uluwatu' | 'Canggu' | 'Ubud' | 'Other'
+export type Area = 'Canggu' | 'Seminyak' | 'Kuta' | 'Uluwatu' | 'Ubud' | 'Other'
 
 export type Category =
   | 'beach'

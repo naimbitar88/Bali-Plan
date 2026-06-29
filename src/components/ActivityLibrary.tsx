@@ -25,10 +25,12 @@ interface Props {
 }
 
 const AREA_LABEL: Record<Area, string> = {
-  Uluwatu: 'Uluwatu',
   Canggu: 'Canggu',
+  Seminyak: 'Seminyak',
+  Kuta: 'Kuta',
+  Uluwatu: 'Uluwatu',
   Ubud: 'Ubud',
-  Other: 'Party / Beach Clubs',
+  Other: 'Other',
 }
 
 export default function ActivityLibrary({
@@ -44,6 +46,8 @@ export default function ActivityLibrary({
 }: Props) {
   // Focus on Canggu — other areas start collapsed.
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({
+    Seminyak: true,
+    Kuta: true,
     Uluwatu: true,
     Ubud: true,
     Other: true,
@@ -52,7 +56,14 @@ export default function ActivityLibrary({
 
   const grouped = useMemo(() => {
     const q = query.trim().toLowerCase()
-    const map: Record<Area, Activity[]> = { Uluwatu: [], Canggu: [], Ubud: [], Other: [] }
+    const map: Record<Area, Activity[]> = {
+      Canggu: [],
+      Seminyak: [],
+      Kuta: [],
+      Uluwatu: [],
+      Ubud: [],
+      Other: [],
+    }
     activities
       .filter((a) => !q || a.name.toLowerCase().includes(q))
       .forEach((a) => map[a.area].push(a))
