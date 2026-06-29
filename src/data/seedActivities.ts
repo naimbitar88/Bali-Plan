@@ -54,10 +54,10 @@ export const SEED_ACTIVITIES: Activity[] = [
     category: 'party',
     defaultDurationMin: 180,
     instagram: ig('singlefinbali'),
-    verifyNote: 'Lineup changes — verify closer to the trip.',
+    verifyNote: 'DJ lineup varies — Wed & Sun are the big nights (open till 2am).',
     weeklyEvents: [
-      { dayOfWeek: 0, name: 'Single Fin Sundays', start: '16:00', end: '01:00' },
-      { dayOfWeek: 3, name: 'Wednesday Sunset Session', start: '16:00', end: '23:00' },
+      { dayOfWeek: 3, name: 'Wednesday Sessions', start: '16:00', end: '02:00' },
+      { dayOfWeek: 0, name: 'Sunday Sessions', start: '16:00', end: '01:00' },
     ],
   },
   {
@@ -108,10 +108,10 @@ export const SEED_ACTIVITIES: Activity[] = [
     category: 'beachclub',
     defaultDurationMin: 180,
     instagram: ig('elkabronbali'),
-    verifyNote: 'Sunset is the moment — book ahead. Verify event nights.',
+    verifyNote: 'Spanish cliff club, daily sunset parties — book ahead. Fri & Sat are signature.',
     weeklyEvents: [
-      { dayOfWeek: 6, name: 'Saturday Sunset Sessions', start: '15:00', end: '23:00' },
-      { dayOfWeek: 0, name: 'Sunday Cliff Party', start: '14:00', end: '22:00' },
+      { dayOfWeek: 5, name: 'White Sunset Party', start: '15:00', end: '23:00' },
+      { dayOfWeek: 6, name: 'Saturday Sunset Party', start: '15:00', end: '23:00' },
     ],
   },
 
@@ -139,10 +139,9 @@ export const SEED_ACTIVITIES: Activity[] = [
     category: 'beachclub',
     defaultDurationMin: 210,
     instagram: ig('labrisabali'),
-    verifyNote: 'Sunday sessions get busy — verify lineup & book.',
+    verifyNote: 'Eco beach club on Echo Beach; famous Sunday market. Verify DJ events.',
     weeklyEvents: [
-      { dayOfWeek: 0, name: 'La Brisa Sundays', start: '13:00', end: '23:00' },
-      { dayOfWeek: 5, name: 'Friday Sundowner', start: '16:00', end: '23:00' },
+      { dayOfWeek: 0, name: 'Sunday Sunset Market (LYD)', start: '10:00', end: '16:00' },
     ],
   },
   {
@@ -164,11 +163,10 @@ export const SEED_ACTIVITIES: Activity[] = [
     category: 'party',
     defaultDurationMin: 240,
     instagram: ig('finnsbeachclub'),
-    verifyNote: 'Big weekly events — verify lineup & book a daybed.',
+    verifyNote: 'DJs daily 12pm–12am; weekends are biggest. Book a daybed. Verify lineup.',
     weeklyEvents: [
-      { dayOfWeek: 4, name: 'Ladies Night', start: '16:00', end: '23:00' },
-      { dayOfWeek: 6, name: 'Saturday Pool Party', start: '11:00', end: '23:00' },
-      { dayOfWeek: 0, name: 'Sunday Sessions', start: '11:00', end: '23:00' },
+      { dayOfWeek: 6, name: 'Saturday Beach Party', start: '12:00', end: '23:00' },
+      { dayOfWeek: 0, name: 'Sunday All-Day Party', start: '12:00', end: '23:00' },
     ],
   },
   {
@@ -178,9 +176,9 @@ export const SEED_ACTIVITIES: Activity[] = [
     category: 'party',
     defaultDurationMin: 180,
     instagram: ig('oldmans.bali'),
-    verifyNote: 'Famous Wednesday party — verify.',
+    verifyNote: 'Legendary "Dirty Wednesdays" (beer pong + DJs), free entry. Open till ~1am.',
     weeklyEvents: [
-      { dayOfWeek: 3, name: "Old Man's Wednesday Party", start: '20:00', end: '02:00' },
+      { dayOfWeek: 3, name: 'Dirty Wednesdays (Beer Pong)', start: '20:00', end: '01:00' },
     ],
   },
   {
@@ -310,11 +308,11 @@ export const SEED_ACTIVITIES: Activity[] = [
     category: 'party',
     defaultDurationMin: 300,
     instagram: ig('savayabali'),
-    verifyNote: 'World-class DJ lineups — verify the night & book a table.',
+    verifyNote: 'World-class DJ lineups (Sundays are headline). Check savaya.com calendar & book a table.',
     weeklyEvents: [
-      { dayOfWeek: 0, name: 'Savaya Sundays', start: '14:00', end: '23:00' },
       { dayOfWeek: 5, name: 'Friday Headliner', start: '16:00', end: '23:00' },
-      { dayOfWeek: 6, name: 'Saturday Mainstage', start: '16:00', end: '23:00' },
+      { dayOfWeek: 6, name: 'Saturday Mainstage', start: '15:00', end: '23:00' },
+      { dayOfWeek: 0, name: 'Savaya Sundays', start: '14:00', end: '23:00' },
     ],
   },
   {
@@ -324,11 +322,12 @@ export const SEED_ACTIVITIES: Activity[] = [
     category: 'party',
     defaultDurationMin: 300,
     instagram: ig('atlasbeachfest'),
-    verifyNote: 'Huge beach club — verify event nights.',
+    verifyNote: "World's biggest beach club; Super Club opens 10pm nightly. Weekends are huge.",
     weeklyEvents: [
-      { dayOfWeek: 5, name: 'Friday Party', start: '16:00', end: '23:00' },
-      { dayOfWeek: 6, name: 'Saturday Party', start: '13:00', end: '23:00' },
-      { dayOfWeek: 0, name: 'Sunday Sessions', start: '13:00', end: '23:00' },
+      { dayOfWeek: 4, name: 'Glow in the Dark', start: '20:00', end: '23:30' },
+      { dayOfWeek: 5, name: 'Friday Beach Party', start: '13:00', end: '23:30' },
+      { dayOfWeek: 6, name: 'Saturday Beach Party', start: '12:00', end: '23:30' },
+      { dayOfWeek: 0, name: 'Sunday Sessions', start: '12:00', end: '23:30' },
     ],
   },
 ]
