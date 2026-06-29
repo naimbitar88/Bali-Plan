@@ -12,7 +12,7 @@ const tag = (t: string) => `https://www.instagram.com/explore/tags/${t}/`
  * recurring "signature" nights and should be re-verified closer to the trip — DJ
  * lineups change seasonally. Everything here is editable inside the app.
  */
-export const SEED_ACTIVITIES: Activity[] = [
+const RAW: Activity[] = [
   // ─────────────────────────────  ULUWATU  ─────────────────────────────
   {
     id: 'ulu-temple',
@@ -481,4 +481,108 @@ export const SEED_ACTIVITIES: Activity[] = [
       { dayOfWeek: 0, name: 'Sunday Sessions', start: '12:00', end: '23:30' },
     ],
   },
+
+  // ──────────────────  AFTER PARTY (late night → morning)  ──────────────────
+  {
+    id: 'ap-vault',
+    name: 'The Vault Canggu',
+    area: 'Canggu',
+    category: 'afterparty',
+    defaultDurationMin: 300,
+    instagram: tag('thevaultcanggu'),
+    verifyNote: 'Underground house/techno; the Canggu after-hours spot, runs into the morning.',
+  },
+  {
+    id: 'ap-akademi',
+    name: 'Akademi Bar (Canggu)',
+    area: 'Canggu',
+    category: 'afterparty',
+    defaultDurationMin: 240,
+    instagram: tag('akademibali'),
+    verifyNote: 'Late cocktail bar/club with serious sound system.',
+  },
+  {
+    id: 'ap-jenja',
+    name: 'Jenja Club',
+    area: 'Other',
+    category: 'afterparty',
+    defaultDurationMin: 300,
+    instagram: tag('jenjabali'),
+    verifyNote: 'Proper nightclub, big-name DJs — runs till ~4am.',
+  },
+  {
+    id: 'ap-mirror',
+    name: 'Mirror Bali (Seminyak)',
+    area: 'Other',
+    category: 'afterparty',
+    defaultDurationMin: 300,
+    instagram: tag('mirrorbali'),
+    verifyNote: 'Cathedral-style club, late EDM nights to ~4am.',
+  },
+  {
+    id: 'ap-skygarden',
+    name: 'Sky Garden (Kuta)',
+    area: 'Other',
+    category: 'afterparty',
+    defaultDurationMin: 300,
+    instagram: tag('skygardenbali'),
+    verifyNote: 'Multi-level superclub, open very late into the morning.',
+  },
+  {
+    id: 'ap-lafavela',
+    name: 'La Favela (Seminyak)',
+    area: 'Other',
+    category: 'afterparty',
+    defaultDurationMin: 240,
+    instagram: tag('lafavelabali'),
+    verifyNote: 'Eclectic bar that turns into a packed late-night dance floor.',
+  },
 ]
+
+/**
+ * Approximate coordinates (focused on Canggu, where we're staying). Used only for rough
+ * in-app distance/time estimates — the per-card Directions link gives exact figures.
+ */
+const COORDS: Record<string, { lat: number; lng: number }> = {
+  // Canggu — beaches & clubs
+  'cgu-batubolong': { lat: -8.6557, lng: 115.13 },
+  'cgu-berawa': { lat: -8.67, lng: 115.138 },
+  'cgu-labrisa': { lat: -8.648, lng: 115.1265 },
+  'cgu-thelawn': { lat: -8.6618, lng: 115.1345 },
+  'cgu-finns': { lat: -8.6792, lng: 115.143 },
+  'cgu-oldmans': { lat: -8.6557, lng: 115.1297 },
+  'cgu-pererenan': { lat: -8.647, lng: 115.119 },
+  'cgu-tanahlot': { lat: -8.6212, lng: 115.0868 },
+  'cgu-cafes': { lat: -8.646, lng: 115.137 },
+  'cgu-samadi': { lat: -8.652, lng: 115.1285 },
+  // Canggu — dining
+  'cgu-moi': { lat: -8.643, lng: 115.117 },
+  'cgu-shun': { lat: -8.668, lng: 115.14 },
+  'cgu-cure': { lat: -8.6805, lng: 115.1405 },
+  'cgu-luma': { lat: -8.656, lng: 115.131 },
+  'cgu-monsoon': { lat: -8.665, lng: 115.137 },
+  'cgu-mason': { lat: -8.647, lng: 115.133 },
+  'cgu-nessa': { lat: -8.6435, lng: 115.118 },
+  'cgu-sangsaka': { lat: -8.651, lng: 115.14 },
+  'cgu-mauri': { lat: -8.6555, lng: 115.132 },
+  'cgu-ulekan': { lat: -8.652, lng: 115.1395 },
+  'cgu-jitugu': { lat: -8.6545, lng: 115.129 },
+  'cgu-pennylane': { lat: -8.652, lng: 115.136 },
+  'cgu-kitsune': { lat: -8.65, lng: 115.139 },
+  'cgu-cafedelmar': { lat: -8.6815, lng: 115.1445 },
+  'cgu-palmilla': { lat: -8.63, lng: 115.1 },
+  // After party
+  'ap-vault': { lat: -8.647, lng: 115.133 },
+  'ap-akademi': { lat: -8.648, lng: 115.131 },
+  'ap-jenja': { lat: -8.67, lng: 115.15 },
+  'ap-mirror': { lat: -8.687, lng: 115.157 },
+  'ap-skygarden': { lat: -8.718, lng: 115.17 },
+  'ap-lafavela': { lat: -8.69, lng: 115.162 },
+  // A few key Uluwatu/Ubud anchors (day trips)
+  'oth-savaya': { lat: -8.8297, lng: 115.0876 },
+  'oth-atlas': { lat: -8.6772, lng: 115.1455 },
+}
+
+export const SEED_ACTIVITIES: Activity[] = RAW.map((a) =>
+  COORDS[a.id] ? { ...a, lat: COORDS[a.id].lat, lng: COORDS[a.id].lng } : a,
+)

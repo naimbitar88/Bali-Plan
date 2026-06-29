@@ -5,6 +5,7 @@ export type Category =
   | 'temple'
   | 'beachclub'
   | 'party'
+  | 'afterparty'
   | 'food'
   | 'dining'
   | 'hike'
@@ -34,6 +35,9 @@ export interface Activity {
   instagram?: string
   notes?: string
   cost?: string
+  /** Approximate coordinates (used for distance/time estimates from your stay). */
+  lat?: number
+  lng?: number
   /** Present on venues that run scheduled events (Savaya, Single Fin, …). */
   weeklyEvents?: WeeklyEvent[]
   /** Shown when lineups should be double-checked closer to the trip. */
@@ -61,4 +65,9 @@ export interface TripMeta {
   startDate: string
   /** "YYYY-MM-DD" (exclusive-ish end day shown on the calendar) */
   endDate: string
+  /** Where you're staying — origin for distance/time + Directions links. */
+  stay?: string
+  /** Coordinates of the stay (for in-app distance estimates). */
+  stayLat?: number
+  stayLng?: number
 }

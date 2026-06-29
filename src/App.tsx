@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Draggable } from '@fullcalendar/interaction'
 import './App.css'
 import { useTrip } from './hooks/useTrip'
-import { defaultHourFor, resolveDrop, tripDays } from './utils'
+import { defaultHourFor, parseStayCoords, resolveDrop, tripDays } from './utils'
 import type { Activity, ScheduledItem } from './types'
 import TopBar from './components/TopBar'
 import ActivityLibrary from './components/ActivityLibrary'
@@ -89,6 +89,13 @@ export default function App() {
           <ActivityLibrary
             activities={trip.activities}
             days={tripDays(trip.meta.startDate, trip.meta.endDate)}
+            stay={trip.meta.stay ?? ''}
+            stayCoords={
+              parseStayCoords(trip.meta.stay ?? '') ??
+              (trip.meta.stayLat != null && trip.meta.stayLng != null
+                ? { lat: trip.meta.stayLat, lng: trip.meta.stayLng }
+                : null)
+            }
             onEdit={setEditing}
             onAdd={() => setEditing(blankActivity())}
             onAssign={handleAssign}

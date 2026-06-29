@@ -38,6 +38,17 @@ export default function TopBar({ meta, live, onChange }: Props) {
         </label>
       </div>
 
+      <label className="stay">
+        🏠 Your stay
+        <input
+          className="stay-input"
+          placeholder="address or lat,lng"
+          value={meta.stay ?? ''}
+          onChange={(e) => onChange({ ...meta, stay: e.target.value })}
+          title="Used as the origin for distance + Directions on every card"
+        />
+      </label>
+
       <div className={`status ${live ? 'on' : 'off'}`}>
         <span className="dot" />
         {live ? 'Live · shared' : 'Local preview'}

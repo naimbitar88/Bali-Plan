@@ -48,6 +48,26 @@ export const DEFAULT_META: TripMeta = {
   title: 'Bali 2026 🌴',
   startDate: '2026-07-15',
   endDate: '2026-07-24',
+  stay: 'No.1 Jalan Raya Semat, Canggu, Bali',
+  stayLat: -8.6515,
+  stayLng: 115.134,
+}
+
+const LS_KEY = 'bali-plan-v1'
+
+interface Persisted {
+  meta: TripMeta
+  activities: Activity[]
+  scheduled: ScheduledItem[]
+}
+
+function loadPersisted(): Persisted | null {
+  try {
+    const raw = localStorage.getItem(LS_KEY)
+    return raw ? (JSON.parse(raw) as Persisted) : null
+  } catch {
+    return null
+  }
 }
 
 export interface TripStore {
@@ -69,14 +89,27 @@ const sortActivities = (a: Activity[]) =>
 
 /* ─────────────────────────  LOCAL (no Firebase) MODE  ───────────────────────── */
 function useLocalTrip(): TripStore {
-  const [meta, setMeta] = useState<TripMeta>(DEFAULT_META)
-  const seeded = sortActivities(SEED_ACTIVITIES)
-  const [activities, setActivities] = useState<Activity[]>(seeded)
   const demo =
     typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('demo')
+  const seeded = sortActivities(SEED_ACTIVITIES)
+
+  // Demo mode is ephemeral; otherwise load any saved plan so edits/deletions persist.
+  const saved = demo ? null : loadPersisted()
+  const [meta, setMeta] = useState<TripMeta>(saved?.meta ?? DEFAULT_META)
+  const [activities, setActivities] = useState<Activity[]>(saved?.activities ?? seeded)
   const [scheduled, setScheduled] = useState<ScheduledItem[]>(
-    demo ? buildDemoScheduled(seeded) : [],
+    saved?.scheduled ?? (demo ? buildDemoScheduled(seeded) : []),
   )
+
+  // Persist on every change (except demo previews).
+  useEffect(() => {
+    if (demo) return
+    try {
+      localStorage.setItem(LS_KEY, JSON.stringify({ meta, activities, scheduled }))
+    } catch {
+      /* storage full / unavailable — ignore */
+    }
+  }, [demo, meta, activities, scheduled])
 
   return {
     meta,

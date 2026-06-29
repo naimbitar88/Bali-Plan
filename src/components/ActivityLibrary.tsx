@@ -1,11 +1,22 @@
 import { useMemo, useState } from 'react'
 import type { Activity, Area } from '../types'
-import { AREA_COLOR, AREA_ORDER, type TripDay } from '../utils'
+import {
+  AREA_COLOR,
+  AREA_ORDER,
+  TYPE_ICON,
+  TYPE_ORDER,
+  typeOf,
+  type LatLng,
+  type PlaceType,
+  type TripDay,
+} from '../utils'
 import ActivityCard from './ActivityCard'
 
 interface Props {
   activities: Activity[]
   days: TripDay[]
+  stay: string
+  stayCoords: LatLng | null
   onEdit: (a: Activity) => void
   onAdd: () => void
   onAssign: (activityId: string, dayIso: string) => void
@@ -23,13 +34,20 @@ const AREA_LABEL: Record<Area, string> = {
 export default function ActivityLibrary({
   activities,
   days,
+  stay,
+  stayCoords,
   onEdit,
   onAdd,
   onAssign,
   onDelete,
   onDeleteArea,
 }: Props) {
-  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({})
+  // Focus on Canggu — other areas start collapsed.
+  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({
+    Uluwatu: true,
+    Ubud: true,
+    Other: true,
+  })
   const [query, setQuery] = useState('')
 
   const grouped = useMemo(() => {
@@ -40,6 +58,17 @@ export default function ActivityLibrary({
       .forEach((a) => map[a.area].push(a))
     return map
   }, [activities, query])
+
+  // Within an area, split into Restaurant / Beach / Club / After Party / Tourism.
+  const byType = (items: Activity[]) => {
+    const m = new Map<PlaceType, Activity[]>()
+    items.forEach((a) => {
+      const t = typeOf(a.category)
+      if (!m.has(t)) m.set(t, [])
+      m.get(t)!.push(a)
+    })
+    return TYPE_ORDER.filter((t) => m.has(t)).map((t) => ({ type: t, items: m.get(t)! }))
+  }
 
   return (
     <aside className="library">
@@ -92,15 +121,26 @@ export default function ActivityLibrary({
               </div>
               {!isCollapsed && (
                 <div className="group-cards">
-                  {items.map((a) => (
-                    <ActivityCard
-                      key={a.id}
-                      activity={a}
-                      days={days}
-                      onEdit={onEdit}
-                      onAssign={onAssign}
-                      onDelete={onDelete}
-                    />
+                  {byType(items).map(({ type, items: typeItems }) => (
+                    <div key={type} className="type-group">
+                      <div className="type-head">
+                        <span>{TYPE_ICON[type]}</span>
+                        {type}
+                        <span className="type-count">{typeItems.length}</span>
+                      </div>
+                      {typeItems.map((a) => (
+                        <ActivityCard
+                          key={a.id}
+                          activity={a}
+                          days={days}
+                          stay={stay}
+                          stayCoords={stayCoords}
+                          onEdit={onEdit}
+                          onAssign={onAssign}
+                          onDelete={onDelete}
+                        />
+                      ))}
+                    </div>
                   ))}
                 </div>
               )}

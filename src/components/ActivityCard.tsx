@@ -1,9 +1,19 @@
 import type { Activity } from '../types'
-import { AREA_COLOR, CATEGORY_ICON, DAY_NAMES, type TripDay } from '../utils'
+import {
+  AREA_COLOR,
+  CATEGORY_ICON,
+  DAY_NAMES,
+  estimate,
+  mapsDirectionsUrl,
+  type LatLng,
+  type TripDay,
+} from '../utils'
 
 interface Props {
   activity: Activity
   days: TripDay[]
+  stay: string
+  stayCoords: LatLng | null
   onEdit: (a: Activity) => void
   onAssign: (activityId: string, dayIso: string) => void
   onDelete: (id: string) => void
@@ -17,8 +27,20 @@ function durationLabel(min: number) {
   return `${m}m`
 }
 
-export default function ActivityCard({ activity, days, onEdit, onAssign, onDelete }: Props) {
+export default function ActivityCard({
+  activity,
+  days,
+  stay,
+  stayCoords,
+  onEdit,
+  onAssign,
+  onDelete,
+}: Props) {
   const color = AREA_COLOR[activity.area]
+  const coords =
+    activity.lat != null && activity.lng != null ? { lat: activity.lat, lng: activity.lng } : undefined
+  const est = stayCoords && coords ? estimate(stayCoords, coords) : null
+  const directionsUrl = mapsDirectionsUrl(stay, { name: activity.name, coords })
   return (
     <div
       className="activity-card"
@@ -44,6 +66,22 @@ export default function ActivityCard({ activity, days, onEdit, onAssign, onDelet
 
       <div className="card-meta">
         <span className="chip duration">⏱ {durationLabel(activity.defaultDurationMin)}</span>
+        {est && (
+          <span className="chip dist" title="Rough driving estimate from your stay (approx)">
+            🚗 ≈{est.km} km · ≈{est.min} min
+          </span>
+        )}
+        <a
+          className="chip dir"
+          href={directionsUrl}
+          target="_blank"
+          rel="noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          onMouseDown={(e) => e.stopPropagation()}
+          title="Open Google Maps directions from your stay (exact distance & time)"
+        >
+          🧭 Directions
+        </a>
         {activity.weeklyEvents && activity.weeklyEvents.length > 0 && (
           <span
             className="chip events"
