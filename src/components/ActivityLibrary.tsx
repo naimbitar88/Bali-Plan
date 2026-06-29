@@ -52,6 +52,7 @@ export default function ActivityLibrary({
     Ubud: true,
     Other: true,
   })
+  const [collapsedTypes, setCollapsedTypes] = useState<Record<string, boolean>>({})
   const [query, setQuery] = useState('')
 
   const grouped = useMemo(() => {
@@ -132,27 +133,38 @@ export default function ActivityLibrary({
               </div>
               {!isCollapsed && (
                 <div className="group-cards">
-                  {byType(items).map(({ type, items: typeItems }) => (
-                    <div key={type} className="type-group">
-                      <div className="type-head">
-                        <span>{TYPE_ICON[type]}</span>
-                        {type}
-                        <span className="type-count">{typeItems.length}</span>
+                  {byType(items).map(({ type, items: typeItems }) => {
+                    const tKey = `${area}:${type}`
+                    const typeCollapsed = collapsedTypes[tKey]
+                    return (
+                      <div key={type} className="type-group">
+                        <button
+                          className="type-head"
+                          onClick={() =>
+                            setCollapsedTypes((c) => ({ ...c, [tKey]: !c[tKey] }))
+                          }
+                        >
+                          <span>{TYPE_ICON[type]}</span>
+                          {type}
+                          <span className="type-count">{typeItems.length}</span>
+                          <span className="type-caret">{typeCollapsed ? '▸' : '▾'}</span>
+                        </button>
+                        {!typeCollapsed &&
+                          typeItems.map((a) => (
+                            <ActivityCard
+                              key={a.id}
+                              activity={a}
+                              days={days}
+                              stay={stay}
+                              stayCoords={stayCoords}
+                              onEdit={onEdit}
+                              onAssign={onAssign}
+                              onDelete={onDelete}
+                            />
+                          ))}
                       </div>
-                      {typeItems.map((a) => (
-                        <ActivityCard
-                          key={a.id}
-                          activity={a}
-                          days={days}
-                          stay={stay}
-                          stayCoords={stayCoords}
-                          onEdit={onEdit}
-                          onAssign={onAssign}
-                          onDelete={onDelete}
-                        />
-                      ))}
-                    </div>
-                  ))}
+                    )
+                  })}
                 </div>
               )}
             </section>

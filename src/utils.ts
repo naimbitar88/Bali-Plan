@@ -8,6 +8,8 @@ export const CATEGORY_ICON: Record<Category, string> = {
   afterparty: '🪩',
   food: '🍽️',
   dining: '🍷',
+  shopping: '🛍️',
+  spa: '💆',
   hike: '🥾',
   waterfall: '💦',
   nature: '🌿',
@@ -16,13 +18,30 @@ export const CATEGORY_ICON: Record<Category, string> = {
 }
 
 /* ───────────────  Location → Type grouping  ─────────────── */
-export type PlaceType = 'Restaurant' | 'Beach' | 'Club' | 'After Party' | 'Tourism'
-export const TYPE_ORDER: PlaceType[] = ['Restaurant', 'Beach', 'Club', 'After Party', 'Tourism']
+export type PlaceType =
+  | 'Restaurant'
+  | 'Beach'
+  | 'Club'
+  | 'After Party'
+  | 'Shopping'
+  | 'Spa'
+  | 'Tourism'
+export const TYPE_ORDER: PlaceType[] = [
+  'Restaurant',
+  'Beach',
+  'Club',
+  'After Party',
+  'Shopping',
+  'Spa',
+  'Tourism',
+]
 export const TYPE_ICON: Record<PlaceType, string> = {
   Restaurant: '🍽️',
   Beach: '🏖️',
   Club: '🍹',
   'After Party': '🪩',
+  Shopping: '🛍️',
+  Spa: '💆',
   Tourism: '📸',
 }
 
@@ -32,6 +51,10 @@ export function typeOf(category: Category): PlaceType {
     case 'dining':
     case 'food':
       return 'Restaurant'
+    case 'shopping':
+      return 'Shopping'
+    case 'spa':
+      return 'Spa'
     case 'beach':
     case 'surf':
       return 'Beach'
@@ -138,6 +161,10 @@ export function defaultHourFor(category: Category): number {
       return 19
     case 'food':
       return 12
+    case 'shopping':
+      return 11
+    case 'spa':
+      return 14
     case 'hike':
       return 8
     default:

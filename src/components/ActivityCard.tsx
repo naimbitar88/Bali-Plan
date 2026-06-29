@@ -66,6 +66,11 @@ export default function ActivityCard({
 
       <div className="card-meta">
         <span className="chip duration">⏱ {durationLabel(activity.defaultDurationMin)}</span>
+        {activity.rating != null && (
+          <span className="chip rating" title="Google rating (snapshot)">
+            ⭐ {activity.rating.toFixed(1)}
+          </span>
+        )}
         {est && (
           <span className="chip dist" title="Rough driving estimate from your stay (approx)">
             🚗 ≈{est.km} km · ≈{est.min} min

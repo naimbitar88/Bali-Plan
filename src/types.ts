@@ -8,6 +8,8 @@ export type Category =
   | 'afterparty'
   | 'food'
   | 'dining'
+  | 'shopping'
+  | 'spa'
   | 'hike'
   | 'waterfall'
   | 'nature'
@@ -38,6 +40,8 @@ export interface Activity {
   /** Approximate coordinates (used for distance/time estimates from your stay). */
   lat?: number
   lng?: number
+  /** Google rating snapshot (out of 5). */
+  rating?: number
   /** Present on venues that run scheduled events (Savaya, Single Fin, …). */
   weeklyEvents?: WeeklyEvent[]
   /** Shown when lineups should be double-checked closer to the trip. */

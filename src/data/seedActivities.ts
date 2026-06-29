@@ -547,6 +547,91 @@ const RAW: Activity[] = [
     verifyNote: 'Iconic Seminyak beach club (Petitenget); sunsets, music, design. Book ahead.',
     weeklyEvents: [{ dayOfWeek: 0, name: 'Sunday Sessions', start: '12:00', end: '23:00' }],
   },
+
+  // ─────────────────────────────  SHOPPING  ─────────────────────────────
+  {
+    id: 'shp-baliedition',
+    name: 'Bali Edition',
+    area: 'Canggu',
+    category: 'shopping',
+    defaultDurationMin: 90,
+    instagram: ig('baliedition.shop'),
+    notes: 'Lifestyle concept boutique stocking favourite local & resort brands.',
+  },
+  {
+    id: 'shp-loveanchor',
+    name: 'Love Anchor',
+    area: 'Canggu',
+    category: 'shopping',
+    defaultDurationMin: 90,
+    instagram: ig('loveanchorcanggu'),
+    notes: 'Open-air bazaar & boutiques on Batu Bolong — fashion, homeware, jewellery.',
+  },
+  {
+    id: 'shp-limitededition',
+    name: 'Limited Edition Concept Store',
+    area: 'Canggu',
+    category: 'shopping',
+    defaultDurationMin: 60,
+    instagram: ig('limited__edition__store'),
+    notes: 'Edgy high-end concept store, Jl. Pantai Berawa.',
+  },
+  {
+    id: 'shp-prettythings',
+    name: 'Pretty Things',
+    area: 'Canggu',
+    category: 'shopping',
+    defaultDurationMin: 60,
+    instagram: ig('prettythings.bali'),
+    notes: 'Whimsical Canggu concept store — clothing, jewellery, lifestyle.',
+  },
+
+  // ──────────────────────  LUXURY SPAS (Canggu)  ──────────────────────
+  {
+    id: 'spa-amo',
+    name: 'AMO Spa',
+    area: 'Canggu',
+    category: 'spa',
+    defaultDurationMin: 120,
+    instagram: ig('amospa'),
+    notes: 'Premium wellness club — bathhouse, sauna, ice baths, facials & massage, Berawa.',
+  },
+  {
+    id: 'spa-spring',
+    name: 'Spring Spa Canggu',
+    area: 'Canggu',
+    category: 'spa',
+    defaultDurationMin: 90,
+    instagram: ig('springspabali'),
+    notes: 'Chic all-white boutique day spa; the "Spring Signature" massage is famous.',
+  },
+  {
+    id: 'spa-como',
+    name: 'COMO Shambhala (Uma Canggu)',
+    area: 'Canggu',
+    category: 'spa',
+    defaultDurationMin: 120,
+    instagram: ig('comoumacanggu'),
+    notes: 'Luxury holistic wellness retreat at COMO Uma Canggu, Echo Beach.',
+  },
+  {
+    id: 'spa-therapy',
+    name: 'Therapy Canggu',
+    area: 'Canggu',
+    category: 'spa',
+    defaultDurationMin: 90,
+    instagram: ig('therapycanggu'),
+    notes: 'High-end spa with warm wood-and-concrete interiors.',
+  },
+  {
+    id: 'spa-bodytemple',
+    name: 'Body Temple Spa (Finns)',
+    area: 'Canggu',
+    category: 'spa',
+    defaultDurationMin: 90,
+    instagram: ig('bodytemplespa'),
+    notes: 'Signature massages, Royal Lulur & THALGO facials at Finns Beach Club, Berawa.',
+  },
 ]
 
 /**
@@ -585,6 +670,17 @@ const COORDS: Record<string, { lat: number; lng: number }> = {
   'ap-vault': { lat: -8.647, lng: 115.133 },
   'ap-akademi': { lat: -8.6792, lng: 115.1563 }, // Potato Head, Petitenget
   'smy-potatohead': { lat: -8.6792, lng: 115.1563 },
+  // Shopping (Canggu)
+  'shp-baliedition': { lat: -8.658, lng: 115.135 },
+  'shp-loveanchor': { lat: -8.6555, lng: 115.129 },
+  'shp-limitededition': { lat: -8.668, lng: 115.139 },
+  'shp-prettythings': { lat: -8.655, lng: 115.133 },
+  // Spas (Canggu)
+  'spa-amo': { lat: -8.665, lng: 115.138 },
+  'spa-spring': { lat: -8.66, lng: 115.137 },
+  'spa-como': { lat: -8.654, lng: 115.127 },
+  'spa-therapy': { lat: -8.64, lng: 115.135 },
+  'spa-bodytemple': { lat: -8.679, lng: 115.143 },
   'ap-jenja': { lat: -8.68, lng: 115.156 },
   'ap-mirror': { lat: -8.679, lng: 115.1565 },
   'ap-skygarden': { lat: -8.7099, lng: 115.1701 },
@@ -594,6 +690,45 @@ const COORDS: Record<string, { lat: number; lng: number }> = {
   'oth-atlas': { lat: -8.6772, lng: 115.1455 },
 }
 
-export const SEED_ACTIVITIES: Activity[] = RAW.map((a) =>
-  COORDS[a.id] ? { ...a, lat: COORDS[a.id].lat, lng: COORDS[a.id].lng } : a,
-)
+/**
+ * Google rating snapshot (out of 5). Luma & La Brisa were spot-checked live; the rest are a
+ * best-effort recent snapshot and may drift by ±0.1–0.2 — exact live ratings need the Google
+ * Places API. New venues without a stable rating yet (MOI, Bali Edition) are left blank.
+ */
+const RATINGS: Record<string, number> = {
+  // Canggu — restaurants
+  'cgu-cafes': 4.4, 'cgu-cure': 4.7, 'cgu-kitsune': 4.5, 'cgu-jitugu': 4.6, 'cgu-luma': 4.5,
+  'cgu-mason': 4.6, 'cgu-monsoon': 4.5, 'cgu-pennylane': 4.6, 'cgu-nessa': 4.6, 'cgu-shun': 4.9,
+  'cgu-ulekan': 4.6, 'cgu-samadi': 4.5,
+  // Canggu — beaches & clubs
+  'cgu-batubolong': 4.5, 'cgu-berawa': 4.4, 'cgu-pererenan': 4.5, 'oth-atlas': 4.4,
+  'cgu-cafedelmar': 4.4, 'cgu-finns': 4.5, 'cgu-labrisa': 4.6, 'cgu-oldmans': 4.4,
+  'cgu-thelawn': 4.4, 'cgu-tanahlot': 4.6, 'ap-vault': 4.3,
+  // Canggu — shopping & spas
+  'shp-loveanchor': 4.4, 'shp-limitededition': 4.5, 'shp-prettythings': 4.7,
+  'spa-amo': 4.6, 'spa-spring': 4.7, 'spa-como': 4.7, 'spa-therapy': 4.8, 'spa-bodytemple': 4.5,
+  // Seminyak
+  'cgu-mauri': 4.7, 'cgu-sangsaka': 4.6, 'smy-potatohead': 4.6, 'ap-akademi': 4.6,
+  'ap-jenja': 4.0, 'ap-lafavela': 4.3, 'ap-mirror': 4.0,
+  // Kuta
+  'ap-skygarden': 4.1,
+  // Uluwatu
+  'ulu-temple': 4.6, 'ulu-padangpadang': 4.5, 'ulu-suluban': 4.5, 'ulu-bingin': 4.6,
+  'ulu-singlefin': 4.6, 'ulu-melasti': 4.7, 'ulu-nyangnyang': 4.6, 'ulu-sundays': 4.6,
+  'ulu-thomas': 4.5, 'ulu-karma': 4.5, 'ulu-elkabron': 4.5, 'ulu-luna': 4.4, 'oth-savaya': 4.6,
+  'cgu-palmilla': 4.5,
+  // Ubud
+  'ubd-tegallalang': 4.5, 'ubd-monkeyforest': 4.5, 'ubd-tegenungan': 4.4, 'ubd-campuhan': 4.6,
+  'ubd-palace': 4.5, 'ubd-goagajah': 4.5, 'ubd-tirtaempul': 4.6, 'ubd-batur': 4.7,
+  'ubd-kantolampo': 4.6, 'ubd-baliswing': 4.4,
+}
+
+export const SEED_ACTIVITIES: Activity[] = RAW.map((a) => {
+  const c = COORDS[a.id]
+  const r = RATINGS[a.id]
+  return {
+    ...a,
+    ...(c ? { lat: c.lat, lng: c.lng } : {}),
+    ...(r != null ? { rating: r } : {}),
+  }
+})
